@@ -7,7 +7,7 @@
 <meta content="0" http-equiv="Expires"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>Carteira de Clientes — 30/07/2026</title>
+<title>Carteira de Clientes — 30/07/2026 · Histórico e Comparativos</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -501,8 +501,99 @@
     .hero-title { font-size:1.8rem; }
     .sector-tab { font-size:.68rem; }
   }
+
+
+  /* Histórico mensal dos indicadores */
+  .indicators-heading { align-items:flex-end; gap:16px; flex-wrap:wrap; }
+  .month-history-controls {
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    margin-left:auto; padding:8px 10px; border:1px solid var(--border);
+    background:rgba(255,255,255,.78); border-radius:14px;
+    box-shadow:0 8px 24px rgba(11,31,74,.06);
+  }
+  .month-history-controls label {
+    font-family:'Sora',sans-serif; font-size:.67rem; letter-spacing:.08em;
+    text-transform:uppercase; font-weight:800; color:var(--text-mid);
+  }
+  .month-history-select {
+    appearance:auto; min-width:165px; border:1px solid rgba(30,114,212,.2);
+    border-radius:10px; background:#fff; color:var(--text-dark);
+    font-family:'Sora',sans-serif; font-size:.76rem; font-weight:700;
+    padding:9px 34px 9px 11px; cursor:pointer;
+  }
+  .month-reference-badge {
+    display:inline-flex; align-items:center; min-height:34px; padding:7px 10px;
+    border-radius:10px; background:#EEF4FF; color:#1A4B8C;
+    font-family:'DM Mono',monospace; font-size:.68rem; font-weight:600;
+    white-space:nowrap;
+  }
+  .history-availability-note {
+    margin:12px 0 18px; padding:11px 14px; border-radius:12px;
+    border:1px solid rgba(30,114,212,.12); background:rgba(238,244,255,.58);
+    color:var(--text-mid); font-size:.72rem; line-height:1.55;
+  }
+  .history-availability-note strong { color:var(--azul-med); }
+  .historical-panel-reference {
+    margin-left:auto; font-family:'DM Mono',monospace; font-size:.66rem;
+    color:var(--text-light); white-space:nowrap;
+  }
+  @media(max-width:760px){
+    .month-history-controls { width:100%; margin-left:0; justify-content:space-between; }
+    .month-history-select { flex:1; min-width:150px; }
+    .indicators-heading .sector-tabs { width:100%; }
+    .historical-panel-reference { width:100%; margin-left:0; }
+  }
+  @media(max-width:420px){
+    .month-history-controls { align-items:stretch; }
+    .month-history-controls label { width:100%; }
+    .month-reference-badge { width:100%; justify-content:center; }
+  }
 </style>
-<meta content="no-store, no-cache, must-revalidate, max-age=0" http-equiv="Cache-Control"/><meta content="no-cache" http-equiv="Pragma"/><meta content="0" http-equiv="Expires"/></head>
+<meta content="no-store, no-cache, must-revalidate, max-age=0" http-equiv="Cache-Control"/><meta content="no-cache" http-equiv="Pragma"/><meta content="0" http-equiv="Expires"/><style>
+  .history-evolution-section{padding-top:32px}
+  .history-main-heading{align-items:center}
+  .history-quality-pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:8px 12px;font-size:.68rem;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+  .history-quality-pill.high{background:#EAF7EE;color:#25723A;border:1px solid rgba(37,114,58,.2)}
+  .history-quality-pill.medium{background:#FFF7DF;color:#8A6300;border:1px solid rgba(180,129,0,.22)}
+  .history-quality-pill.estimated{background:#FFF0E6;color:#B34B00;border:1px solid rgba(242,107,29,.25)}
+  .history-executive-card{background:linear-gradient(135deg,#FFFFFF 0%,#F7FAFF 100%);border:1px solid var(--border);border-radius:18px;padding:22px 24px;margin-bottom:16px;box-shadow:0 10px 30px rgba(20,65,120,.06)}
+  .history-executive-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px}
+  .history-executive-top strong{font-size:.92rem;color:var(--azul-esc)}
+  .history-executive-top span{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text-light)}
+  #historyAnalysisText{font-size:.84rem;line-height:1.7;color:var(--text-mid)}
+  .history-quality-detail{font-size:.7rem;line-height:1.55;color:var(--text-light);margin-top:9px;padding-top:9px;border-top:1px solid rgba(30,114,212,.08)}
+  .comparison-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:18px}
+  .delta-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;min-height:112px;position:relative;overflow:hidden}
+  .delta-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:#A7B6C9}
+  .delta-card.good::before{background:#28A745}.delta-card.bad::before{background:#E53E3E}.delta-card.neutral::before{background:#8AAAD4}
+  .delta-label{font-size:.64rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);font-weight:700}
+  .delta-value{font-family:'DM Mono',monospace;font-size:1.35rem;font-weight:800;margin-top:8px;color:var(--azul-esc)}
+  .delta-card.good .delta-value{color:#287A3E}.delta-card.bad .delta-value{color:#C53030}
+  .delta-sub{font-size:.68rem;color:var(--text-light);line-height:1.4;margin-top:5px}
+  .trend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:18px}
+  .chart-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px 18px 12px;min-width:0}
+  .chart-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+  .chart-card-head div{display:flex;flex-direction:column;gap:3px}.chart-card-head strong{font-size:.8rem;color:var(--azul-esc)}.chart-card-head span{font-size:.65rem;color:var(--text-light)}
+  .chart-card canvas{display:block;width:100%;height:250px;max-width:100%}
+  .history-table-card{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:16px}
+  .history-table-head{padding:17px 20px;border-bottom:1px solid var(--border)}
+  .history-table-head div{display:flex;flex-direction:column;gap:4px}.history-table-head strong{font-size:.8rem;color:var(--azul-esc)}.history-table-head span{font-size:.67rem;color:var(--text-light)}
+  .history-table-scroll{overflow:auto}.history-table{width:100%;border-collapse:collapse;min-width:920px}
+  .history-table th{font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--text-light);font-weight:700;padding:11px 13px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
+  .history-table th:first-child,.history-table td:first-child{text-align:left}
+  .history-table td{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--text-mid);padding:12px 13px;text-align:right;border-bottom:1px solid rgba(30,114,212,.05);white-space:nowrap}
+  .history-table tbody tr{cursor:pointer;transition:.15s ease}.history-table tbody tr:hover{background:#F4F8FD}.history-table tbody tr.selected{background:#EDF5FF}.history-table tbody tr:last-child td{border-bottom:0}
+  .history-month-cell{font-family:'Sora',sans-serif!important;font-weight:800!important;color:var(--azul-esc)!important}
+  .history-quality-mini{display:inline-flex;border-radius:999px;padding:4px 7px;font-family:'Sora',sans-serif;font-size:.58rem;font-weight:800}
+  .history-quality-mini.high{background:#EAF7EE;color:#25723A}.history-quality-mini.medium{background:#FFF7DF;color:#8A6300}.history-quality-mini.estimated{background:#FFF0E6;color:#B34B00}
+  .data-audit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .data-audit-card{background:#F8FAFD;border:1px solid rgba(30,114,212,.1);border-radius:14px;padding:16px}.data-audit-card.warning{background:#FFF9ED;border-color:rgba(242,107,29,.18)}
+  .data-audit-card strong{display:block;font-size:.7rem;color:var(--azul-esc);margin-bottom:6px}.data-audit-card p{font-size:.67rem;line-height:1.55;color:var(--text-mid)}
+  .churn-quality{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:.62rem;font-weight:800;white-space:nowrap}.churn-quality.confirmed{background:#EAF7EE;color:#25723A}.churn-quality.estimated{background:#FFF0E6;color:#B34B00}
+  .churn-method-note{font-size:.7rem;line-height:1.55;color:var(--text-light);margin-top:12px;padding:12px 14px;background:#F8FAFD;border-radius:12px;border:1px solid rgba(30,114,212,.08)}
+  @media(max-width:960px){.comparison-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.data-audit-grid{grid-template-columns:1fr}.trend-grid{grid-template-columns:1fr}}
+  @media(max-width:640px){.comparison-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.history-executive-top{align-items:flex-start;flex-direction:column}.chart-card canvas{height:220px}.churn-table th:nth-child(5){display:none}.churn-table td:nth-child(5){display:flex}.history-quality-pill{width:100%}}
+</style></head>
 <body>
 <header class="hero">
 <div class="hero-grid">
@@ -512,13 +603,13 @@
 <p class="hero-sub">Referência: <strong style="color:rgba(255,255,255,.8)">Julho / 2026</strong>  ·  30/07/2026</p>
 </div>
 <div class="hero-badge">
-<div class="big">82</div>
+<div class="big">86</div>
 <div class="lbl">CLIENTES ATIVOS</div>
-<div class="hero-breakdown"><button aria-expanded="false" aria-label="Ver lista dos 79 clientes de Marketing" class="client-breakdown-btn" data-client-type="marketing" type="button">79 Marketing</button><button aria-expanded="false" aria-label="Ver lista dos 3 clientes apenas de IA" class="client-breakdown-btn" data-client-type="ia" type="button">3 apenas IA</button></div></div>
+<div class="hero-breakdown"><button aria-expanded="false" aria-label="Ver lista dos 83 clientes de Marketing" class="client-breakdown-btn" data-client-type="marketing" type="button">83 Marketing</button><button aria-expanded="false" aria-label="Ver lista dos 3 clientes apenas de IA" class="client-breakdown-btn" data-client-type="ia" type="button">3 apenas IA</button></div></div>
 </div>
 </header>
 <div class="stripe"></div>
-<div class="container"> AUDITORIA: carteira recalculada em 30/07/2026; DAYMOD, Rezzidenze e Jacqueline Santana removidos sem churn; Lopes Chaves consolidado em Ronald Chaves; Luiz Pinheiro adicionado com entrada em 29/07/2026; 4 próximas transições. <!-- KPIs -->
+<div class="container"> AUDITORIA: carteira recalculada em 30/07/2026; Samy Corretora adicionada com entrada em 16/07/2026; 86 clientes ativos (83 Marketing + 3 IA); julho consolidado com 32 entradas brutas de Marketing (31 ainda ativas + Petronio removido administrativamente); badges, faixas, entradas, LTV, churn rate, saldo, comparativos e gráficos atualizados. <!-- KPIs -->
 <div class="section transition-section" id="transitionSection">
 <div aria-controls="transitionContent" aria-expanded="false" class="section-heading-row transition-toggle" id="transitionToggle" role="button" tabindex="0">
 <div>
@@ -532,40 +623,93 @@
 <div class="section-heading-row indicators-heading">
 <div>
 <p class="section-title">Indicadores Gerais</p>
-<p class="section-description">Selecione o setor para visualizar os indicadores correspondentes.</p>
+<p class="section-description">Selecione o mês e o setor para comparar a evolução da carteira.</p>
 </div>
-<div aria-label="Setor dos indicadores" class="sector-tabs" role="tablist">
-<button aria-selected="true" class="sector-tab active" data-sector-tab="marketing" role="tab" type="button"><span>79</span><strong>79</strong></button>
-<button aria-selected="false" class="sector-tab" data-sector-tab="ia" role="tab" type="button"><span>3</span><strong>3</strong></button>
+<div aria-label="Mês dos indicadores" class="month-history-controls">
+<label for="monthHistorySelect">Mês</label>
+<select class="month-history-select" id="monthHistorySelect"><option selected="" value="2026-07">Julho/2026 — atual</option><option value="2026-06">Junho/2026</option><option value="2026-05">Maio/2026 — reconstruído</option><option value="2026-04">Abril/2026 — reconstruído</option><option value="2026-03">Março/2026 — reconstruído</option></select>
+<span class="month-reference-badge" id="monthReferenceBadge">Referência: 30/07/2026</span>
+</div><div aria-label="Setor dos indicadores" class="sector-tabs" role="tablist">
+<button aria-selected="true" class="sector-tab active" data-sector-tab="marketing" role="tab" type="button"><span>Marketing</span><strong>83</strong></button>
+<button aria-selected="false" class="sector-tab" data-sector-tab="ia" role="tab" type="button"><span>IA</span><strong>3</strong></button>
 </div>
-</div>
+</div><p class="history-availability-note" id="historyAvailabilityNote"><strong>Histórico consolidado:</strong> março a julho de 2026. Junho e julho foram cruzados com snapshots e registros de churn; março a maio são reconstruções e aparecem identificados como estimativas.</p>
 <div class="sector-panel active" data-sector-panel="marketing" role="tabpanel">
-<div class="sector-panel-header"><span class="sector-panel-pill marketing-pill">Marketing</span><span>Indicadores operacionais de tráfego, retenção e carteira.</span></div>
+<div class="sector-panel-header"><span class="sector-panel-pill marketing-pill">Marketing</span><span>Indicadores operacionais de tráfego, retenção e carteira.</span><span class="historical-panel-reference">Fotografia em 30/07/2026</span></div>
 <div class="kpi-grid">
-<div class="kpi-card accent-blue"><div class="kpi-label">Clientes ativos</div><div class="kpi-value blue">79</div><div class="kpi-sub">clientes de Marketing</div></div>
-<div class="kpi-card accent-orange"><div class="kpi-label">Clientes &lt; 3 meses</div><div class="kpi-value orange">64</div><div class="kpi-sub">81.0% da carteira de Marketing</div></div>
-<div class="kpi-card accent-blue"><div class="kpi-label">Clientes 3–6 meses</div><div class="kpi-value blue">11</div><div class="kpi-sub">13.9% da carteira de Marketing</div></div>
-<div class="kpi-card accent-dark"><div class="kpi-label">Clientes &gt; 6 meses</div><div class="kpi-value">4</div><div class="kpi-sub">5.1% da carteira de Marketing</div></div>
-<div class="kpi-card accent-orange"><div class="kpi-label">LTV médio</div><div class="kpi-value orange">2.04<span style="font-size:1rem;font-weight:600"> m</span></div><div class="kpi-sub">tempo médio da carteira ativa</div></div>
-<div class="kpi-card accent-blue"><div class="kpi-label">Entradas em julho</div><div class="kpi-value blue">27</div><div class="kpi-sub">novos clientes de Marketing</div></div>
-<div class="kpi-card accent-red"><div class="kpi-label">Churns em julho</div><div class="kpi-value red">10</div><div class="kpi-sub">cancelamentos no período</div></div>
-<div class="kpi-card accent-red"><div class="kpi-label">Taxa de churn</div><div class="kpi-value red">11.2<span style="font-size:1rem;font-weight:600">%</span></div><div class="kpi-sub">10 churns sobre base potencial de 89</div></div>
-<div class="kpi-card accent-blue"><div class="kpi-label">TPC</div><div class="kpi-value blue">3.8<span style="font-size:1rem;font-weight:600"> m</span></div><div class="kpi-sub">tempo médio dos 10 churns de julho</div></div>
-<div class="kpi-card accent-dark"><div class="kpi-label">Saldo líquido</div><div class="kpi-value">17</div><div class="kpi-sub">entradas menos churns de Marketing em julho</div></div></div>
+<div class="kpi-card accent-blue" data-kpi="active"><div class="kpi-label">Clientes ativos</div><div class="kpi-value blue">83</div><div class="kpi-sub">clientes de Marketing em 30/07/2026</div></div>
+<div class="kpi-card accent-orange" data-kpi="less3"><div class="kpi-label">Clientes &lt; 3 meses</div><div class="kpi-value orange">68</div><div class="kpi-sub">81,9% da carteira de Marketing</div></div>
+<div class="kpi-card accent-blue" data-kpi="three6"><div class="kpi-label">Clientes 3–6 meses</div><div class="kpi-value blue">11</div><div class="kpi-sub">13,3% da carteira de Marketing</div></div>
+<div class="kpi-card accent-dark" data-kpi="over6"><div class="kpi-label">Clientes &gt; 6 meses</div><div class="kpi-value">4</div><div class="kpi-sub">4,8% da carteira de Marketing</div></div>
+<div class="kpi-card accent-orange" data-kpi="ltv"><div class="kpi-label">LTV médio</div><div class="kpi-value orange">1,94<span style="font-size:1rem;font-weight:600"> m</span></div><div class="kpi-sub">tempo médio da carteira ativa</div></div>
+<div class="kpi-card accent-blue" data-kpi="entries"><div class="kpi-label">Entradas em julho</div><div class="kpi-value blue">32</div><div class="kpi-sub">31 ativos + 1 remoção administrativa</div></div>
+<div class="kpi-card accent-red" data-kpi="churns"><div class="kpi-label">Churns em julho</div><div class="kpi-value red">14</div><div class="kpi-sub">14 cancelamentos no período</div></div>
+<div class="kpi-card accent-red" data-kpi="churnRate"><div class="kpi-label">Taxa de churn</div><div class="kpi-value red">14,4<span style="font-size:1rem;font-weight:600">%</span></div><div class="kpi-sub">14 churns sobre base potencial de 97</div></div>
+<div class="kpi-card accent-blue" data-kpi="tpc"><div class="kpi-label">TPC</div><div class="kpi-value blue">3,6<span style="font-size:1rem;font-weight:600"> m</span></div><div class="kpi-sub">tempo médio dos 14 churns de julho</div></div>
+<div class="kpi-card accent-dark" data-kpi="balance"><div class="kpi-label">Saldo líquido</div><div class="kpi-value">18</div><div class="kpi-sub">entradas brutas menos churns de Marketing em julho</div></div></div>
 </div>
 <div class="sector-panel" data-sector-panel="ia" hidden="" role="tabpanel">
-<div class="sector-panel-header"><span class="sector-panel-pill ia-pill-header">Apenas IA</span><span>Indicadores exclusivos dos clientes atendidos somente pela operação de IA.</span></div>
+<div class="sector-panel-header"><span class="sector-panel-pill ia-pill-header">Apenas IA</span><span>Indicadores exclusivos dos clientes atendidos somente pela operação de IA.</span><span class="historical-panel-reference">Fotografia em 30/07/2026</span></div>
 <div class="kpi-grid">
-<div class="kpi-card accent-blue"><div class="kpi-label">Clientes ativos</div><div class="kpi-value blue">3</div><div class="kpi-sub">clientes apenas de IA</div></div>
-<div class="kpi-card accent-orange"><div class="kpi-label">Clientes &lt; 3 meses</div><div class="kpi-value orange">1</div><div class="kpi-sub">33.3% da carteira de IA</div></div>
-<div class="kpi-card accent-blue"><div class="kpi-label">Clientes 3–6 meses</div><div class="kpi-value blue">2</div><div class="kpi-sub">66.7% da carteira de IA</div></div>
-<div class="kpi-card accent-dark"><div class="kpi-label">Clientes &gt; 6 meses</div><div class="kpi-value">0</div><div class="kpi-sub">0.0% da carteira de IA</div></div>
-<div class="kpi-card accent-orange"><div class="kpi-label">LTV médio</div><div class="kpi-value orange">3.33<span style="font-size:1rem;font-weight:600"> m</span></div><div class="kpi-sub">tempo médio da carteira ativa de IA</div></div>
-<div class="kpi-card accent-blue"><div class="kpi-label">Entradas em julho</div><div class="kpi-value blue">0</div><div class="kpi-sub">novos clientes apenas de IA no mês</div></div>
-<div class="kpi-card accent-red"><div class="kpi-label">Churns em julho</div><div class="kpi-value red">0</div><div class="kpi-sub">nenhum cancelamento registrado</div></div>
-<div class="kpi-card accent-red"><div class="kpi-label">Taxa de churn</div><div class="kpi-value red">0.0<span style="font-size:1rem;font-weight:600">%</span></div><div class="kpi-sub">0 churn sobre base de 3 clientes</div></div>
-<div class="kpi-card accent-blue"><div class="kpi-label">TPC</div><div class="kpi-value blue">—</div><div class="kpi-sub">sem churns para calcular permanência</div></div>
-<div class="kpi-card accent-dark"><div class="kpi-label">Saldo líquido</div><div class="kpi-value">0</div><div class="kpi-sub">entradas menos churns de IA em julho</div></div></div>
+<div class="kpi-card accent-blue" data-kpi="active"><div class="kpi-label">Clientes ativos</div><div class="kpi-value blue">3</div><div class="kpi-sub">clientes de IA em 30/07/2026</div></div>
+<div class="kpi-card accent-orange" data-kpi="less3"><div class="kpi-label">Clientes &lt; 3 meses</div><div class="kpi-value orange">1</div><div class="kpi-sub">33,3% da carteira de IA</div></div>
+<div class="kpi-card accent-blue" data-kpi="three6"><div class="kpi-label">Clientes 3–6 meses</div><div class="kpi-value blue">2</div><div class="kpi-sub">66,7% da carteira de IA</div></div>
+<div class="kpi-card accent-dark" data-kpi="over6"><div class="kpi-label">Clientes &gt; 6 meses</div><div class="kpi-value">0</div><div class="kpi-sub">0,0% da carteira de IA</div></div>
+<div class="kpi-card accent-orange" data-kpi="ltv"><div class="kpi-label">LTV médio</div><div class="kpi-value orange">3,33<span style="font-size:1rem;font-weight:600"> m</span></div><div class="kpi-sub">tempo médio da carteira ativa</div></div>
+<div class="kpi-card accent-blue" data-kpi="entries"><div class="kpi-label">Entradas em julho</div><div class="kpi-value blue">0</div><div class="kpi-sub">novos clientes de IA</div></div>
+<div class="kpi-card accent-red" data-kpi="churns"><div class="kpi-label">Churns em julho</div><div class="kpi-value red">0</div><div class="kpi-sub">nenhum cancelamento registrado</div></div>
+<div class="kpi-card accent-red" data-kpi="churnRate"><div class="kpi-label">Taxa de churn</div><div class="kpi-value red">0,0<span style="font-size:1rem;font-weight:600">%</span></div><div class="kpi-sub">0 churns sobre base potencial de 3</div></div>
+<div class="kpi-card accent-blue" data-kpi="tpc"><div class="kpi-label">TPC</div><div class="kpi-value blue">—</div><div class="kpi-sub">sem churns para calcular permanência</div></div>
+<div class="kpi-card accent-dark" data-kpi="balance"><div class="kpi-label">Saldo líquido</div><div class="kpi-value">0</div><div class="kpi-sub">entradas menos churns de IA em julho</div></div></div>
+</div>
+</div><div class="section history-evolution-section" id="historyEvolutionSection">
+<div class="section-heading-row history-main-heading">
+<div>
+<p class="section-title">Evolução e comparação mensal</p>
+<p class="section-description">Variações percentuais, gráficos e leitura operacional do mês selecionado.</p>
+</div>
+<span class="history-quality-pill high" id="historyQualityPill">Alta confiança</span>
+</div>
+<div class="history-executive-card">
+<div class="history-executive-top">
+<strong id="historyAnalysisTitle">Julho/2026 versus Junho/2026</strong>
+<span id="historyAnalysisReference">Referência: 30/07/2026</span>
+</div>
+<p id="historyAnalysisText"></p>
+<p class="history-quality-detail" id="historyQualityDetail"></p>
+</div>
+<div class="comparison-grid" id="comparisonGrid"></div>
+<div class="trend-grid">
+<article class="chart-card">
+<div class="chart-card-head"><div><strong>Base ativa</strong><span>Total e Marketing</span></div><span>clientes</span></div>
+<canvas aria-label="Gráfico de evolução da base ativa" id="activeTrendChart"></canvas>
+</article>
+<article class="chart-card">
+<div class="chart-card-head"><div><strong>Entradas x churns</strong><span>Fluxo mensal de Marketing</span></div><span>clientes</span></div>
+<canvas aria-label="Gráfico de entradas e churns" id="flowTrendChart"></canvas>
+</article>
+<article class="chart-card">
+<div class="chart-card-head"><div><strong>Taxa de churn</strong><span>Quanto menor, melhor</span></div><span>%</span></div>
+<canvas aria-label="Gráfico de taxa de churn" id="churnTrendChart"></canvas>
+</article>
+<article class="chart-card">
+<div class="chart-card-head"><div><strong>LTV x TPC</strong><span>Tempo médio em meses</span></div><span>meses</span></div>
+<canvas aria-label="Gráfico de LTV e TPC" id="retentionTrendChart"></canvas>
+</article>
+</div>
+<div class="history-table-card">
+<div class="history-table-head"><div><strong>Resumo histórico</strong><span>Clique em um mês para abrir seus indicadores e churns.</span></div></div>
+<div class="history-table-scroll">
+<table class="history-table">
+<thead><tr><th>Mês</th><th>Ativos</th><th>Marketing</th><th>IA</th><th>Entradas</th><th>Churns</th><th>Churn rate</th><th>LTV</th><th>TPC</th><th>Saldo</th><th>Qualidade</th></tr></thead>
+<tbody id="historySummaryBody"></tbody>
+</table>
+</div>
+</div>
+<div class="data-audit-grid">
+<div class="data-audit-card"><strong>Regras aplicadas</strong><p>Rezzidenze não é cliente e não entra em nenhuma base. SIL Imóveis, Imoed, Josirene, Denise Gomes, Decasa e outros registros informados como não clientes foram removidos completamente, sem churn. Marcelo Henrique teve a saída corrigida para 30/05/2026. Lopes Chaves permanece consolidado em Ronald Chaves. Samy Corretora foi adicionada à carteira ativa com entrada em 16/07/2026. Petronio permanece somente no histórico de entradas de julho como remoção administrativa, sem churn.</p></div>
+<div class="data-audit-card warning"><strong>Pendências</strong><p>Tiago Ribeiro tem entrada conhecida, mas não possui mês de saída confirmado; permanece excluído dos cálculos históricos até regularização.</p></div>
+<div class="data-audit-card"><strong>Correções preservadas</strong><p>Rezzidenze não é cliente e não entra em nenhuma base. SIL Imóveis, Imoed e outros registros informados como não clientes foram removidos completamente, sem churn. Marcelo Henrique teve a saída corrigida para 30/05/2026. Lopes Chaves permanece consolidado em Ronald Chaves.</p></div>
 </div>
 </div>
 <!-- DISTRIBUIÇÃO -->
@@ -573,7 +717,7 @@
 <p class="section-title">Distribuição por Tempo de Casa</p>
 <div class="distrib-card" id="distribCard">
 <p class="distrib-title">Clientes de marketing ativos · breakdown mensal</p>
-<div class="bar-row"><span class="bar-label">Até 1 mês</span><div class="bar-track"><div class="bar-fill" data-w="34.2" style="background:linear-gradient(90deg,var(--laranja),var(--laranja-clar))"></div></div><span class="bar-count">27</span></div><div class="bar-row"><span class="bar-label">1 a 2 meses</span><div class="bar-track"><div class="bar-fill" data-w="30.4" style="background:linear-gradient(90deg,var(--laranja-clar),#FFB07A)"></div></div><span class="bar-count">24</span></div><div class="bar-row"><span class="bar-label">2 a 3 meses</span><div class="bar-track"><div class="bar-fill" data-w="16.5" style="background:linear-gradient(90deg,#FFB07A,#FFCBA4)"></div></div><span class="bar-count">13</span></div><div class="bar-row"><span class="bar-label">3 a 4 meses</span><div class="bar-track"><div class="bar-fill" data-w="10.1" style="background:linear-gradient(90deg,var(--azul-viv),var(--azul-clar))"></div></div><span class="bar-count">8</span></div><div class="bar-row"><span class="bar-label">4 a 5 meses</span><div class="bar-track"><div class="bar-fill" data-w="2.5" style="background:linear-gradient(90deg,var(--azul-clar),#8FCEFF)"></div></div><span class="bar-count">2</span></div><div class="bar-row"><span class="bar-label">5 a 6 meses</span><div class="bar-track"><div class="bar-fill" data-w="1.3" style="background:linear-gradient(90deg,#8FCEFF,#B8DFFF)"></div></div><span class="bar-count">1</span></div><div class="bar-row"><span class="bar-label">+ 6 meses</span><div class="bar-track"><div class="bar-fill" data-w="5.1" style="background:linear-gradient(90deg,var(--azul-esc),var(--azul-med))"></div></div><span class="bar-count">4</span></div></div>
+<div class="bar-row"><span class="bar-label">Até 1 mês</span><div class="bar-track"><div class="bar-fill" data-w="37.3" style="background:linear-gradient(90deg,var(--laranja),var(--laranja-clar))"></div></div><span class="bar-count">31</span></div><div class="bar-row"><span class="bar-label">1 a 2 meses</span><div class="bar-track"><div class="bar-fill" data-w="28.9" style="background:linear-gradient(90deg,var(--laranja-clar),#FFB07A)"></div></div><span class="bar-count">24</span></div><div class="bar-row"><span class="bar-label">2 a 3 meses</span><div class="bar-track"><div class="bar-fill" data-w="15.7" style="background:linear-gradient(90deg,#FFB07A,#FFCBA4)"></div></div><span class="bar-count">13</span></div><div class="bar-row"><span class="bar-label">3 a 4 meses</span><div class="bar-track"><div class="bar-fill" data-w="9.6" style="background:linear-gradient(90deg,var(--azul-viv),var(--azul-clar))"></div></div><span class="bar-count">8</span></div><div class="bar-row"><span class="bar-label">4 a 5 meses</span><div class="bar-track"><div class="bar-fill" data-w="2.4" style="background:linear-gradient(90deg,var(--azul-clar),#8FCEFF)"></div></div><span class="bar-count">2</span></div><div class="bar-row"><span class="bar-label">5 a 6 meses</span><div class="bar-track"><div class="bar-fill" data-w="1.2" style="background:linear-gradient(90deg,#8FCEFF,#B8DFFF)"></div></div><span class="bar-count">1</span></div><div class="bar-row"><span class="bar-label">+ 6 meses</span><div class="bar-track"><div class="bar-fill" data-w="4.8" style="background:linear-gradient(90deg,var(--azul-esc),var(--azul-med))"></div></div><span class="bar-count">4</span></div></div>
 </div>
 <!-- SEGMENTOS -->
 <div class="section">
@@ -590,14 +734,14 @@
 <div class="seg-card marketing-seg-card">
 <div class="seg-header orange">
 <span class="seg-name">Menos de 3 meses</span>
-<span class="seg-count">64</span>
+<span class="seg-count">68</span>
 </div>
 <div class="seg-col-header">
 <span>Cliente</span>
 <span>Entrada</span>
 <span>Dias p/ 3M</span>
 </div>
-<div class="seg-body"><div class="seg-row"><span class="nome">Nêgime Elias</span><span class="data">05/05/2026</span><span class="dias-badge urgente">4 dias</span></div><div class="seg-row"><span class="nome">Beto</span><span class="data">06/05/2026</span><span class="dias-badge urgente">5 dias</span></div><div class="seg-row"><span class="nome">Jean Pedro</span><span class="data">07/05/2026</span><span class="dias-badge urgente">6 dias</span></div><div class="seg-row"><span class="nome">Banco de Negócios</span><span class="data">12/05/2026</span><span class="dias-badge urgente">11 dias</span></div><div class="seg-row"><span class="nome">Coutinho Imóveis</span><span class="data">12/05/2026</span><span class="dias-badge urgente">11 dias</span></div><div class="seg-row"><span class="nome">Darvil Bianchet</span><span class="data">12/05/2026</span><span class="dias-badge urgente">11 dias</span></div><div class="seg-row"><span class="nome">Core Investt</span><span class="data">18/05/2026</span><span class="dias-badge atencao">17 dias</span></div><div class="seg-row"><span class="nome">Octa</span><span class="data">21/05/2026</span><span class="dias-badge atencao">20 dias</span></div><div class="seg-row"><span class="nome">Deize Bonfim</span><span class="data">22/05/2026</span><span class="dias-badge atencao">21 dias</span></div><div class="seg-row"><span class="nome">Lucas Cabral Imobiliária</span><span class="data">22/05/2026</span><span class="dias-badge atencao">21 dias</span></div><div class="seg-row"><span class="nome">Daniela Vieira</span><span class="data">25/05/2026</span><span class="dias-badge atencao">24 dias</span></div><div class="seg-row"><span class="nome">Sabino e Sérgio</span><span class="data">25/05/2026</span><span class="dias-badge atencao">24 dias</span></div><div class="seg-row"><span class="nome">Open House</span><span class="data">28/05/2026</span><span class="dias-badge atencao">27 dias</span></div><div class="seg-row"><span class="nome">ADM Corretora de Imóveis</span><span class="data">05/06/2026</span><span class="dias-badge ok">35 dias</span></div><div class="seg-row"><span class="nome">Marcia Pacheco</span><span class="data">05/06/2026</span><span class="dias-badge ok">35 dias</span></div><div class="seg-row"><span class="nome">SLG Imóveis Mkt</span><span class="data">08/06/2026</span><span class="dias-badge ok">38 dias</span></div><div class="seg-row"><span class="nome">Airton</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">FB Negócios Imobiliários</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">Maxuel Ribeiro</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">Samuel Prado</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">Vert Imóveis</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">MURANO</span><span class="data">11/06/2026</span><span class="dias-badge ok">41 dias</span></div><div class="seg-row"><span class="nome">Raffael Lourenço</span><span class="data">11/06/2026</span><span class="dias-badge ok">41 dias</span></div><div class="seg-row"><span class="nome">Cleiton Gregol</span><span class="data">17/06/2026</span><span class="dias-badge ok">47 dias</span></div><div class="seg-row"><span class="nome">Anderson Amaral</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Eduardo Joppert</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Marcos Alexandre</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Ronald Chaves</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Clareza &amp; Campos de Inhapim</span><span class="data">20/06/2026</span><span class="dias-badge ok">50 dias</span></div><div class="seg-row"><span class="nome">Jean Knoll</span><span class="data">22/06/2026</span><span class="dias-badge ok">52 dias</span></div><div class="seg-row"><span class="nome">Paulo Godoi</span><span class="data">23/06/2026</span><span class="dias-badge ok">53 dias</span></div><div class="seg-row"><span class="nome">Terra Concreto Imóveis</span><span class="data">24/06/2026</span><span class="dias-badge ok">54 dias</span></div><div class="seg-row"><span class="nome">Anderson Coelho</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">Cleverson de Arcanjo</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">Jair Pereira de Souza</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">View Imóveis</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">Cida Sampaio</span><span class="data">29/06/2026</span><span class="dias-badge ok">59 dias</span></div><div class="seg-row"><span class="nome">Century 21</span><span class="data">02/07/2026</span><span class="dias-badge ok">62 dias</span></div><div class="seg-row"><span class="nome">Cristal – Remax</span><span class="data">03/07/2026</span><span class="dias-badge ok">63 dias</span></div><div class="seg-row"><span class="nome">Lua Imóveis Sorocaba</span><span class="data">03/07/2026</span><span class="dias-badge ok">63 dias</span></div><div class="seg-row"><span class="nome">Nexus</span><span class="data">06/07/2026</span><span class="dias-badge ok">66 dias</span></div><div class="seg-row"><span class="nome">Raquel Lage</span><span class="data">06/07/2026</span><span class="dias-badge ok">66 dias</span></div><div class="seg-row"><span class="nome">Victor Lacerda (BJJ)</span><span class="data">06/07/2026</span><span class="dias-badge ok">66 dias</span></div><div class="seg-row"><span class="nome">Fernando Maia Imóveis</span><span class="data">07/07/2026</span><span class="dias-badge ok">67 dias</span></div><div class="seg-row"><span class="nome">Vórtice Ativos Imobiliários</span><span class="data">08/07/2026</span><span class="dias-badge ok">68 dias</span></div><div class="seg-row"><span class="nome">Charlisson Imóveis</span><span class="data">10/07/2026</span><span class="dias-badge ok">70 dias</span></div><div class="seg-row"><span class="nome">Aurelio Coutinho</span><span class="data">13/07/2026</span><span class="dias-badge ok">73 dias</span></div><div class="seg-row"><span class="nome">Remax SJC</span><span class="data">15/07/2026</span><span class="dias-badge ok">75 dias</span></div><div class="seg-row"><span class="nome">Wall Street</span><span class="data">15/07/2026</span><span class="dias-badge ok">75 dias</span></div><div class="seg-row"><span class="nome">Marcelo Timbaúba</span><span class="data">18/07/2026</span><span class="dias-badge ok">78 dias</span></div><div class="seg-row"><span class="nome">Imóveis Geraldo</span><span class="data">20/07/2026</span><span class="dias-badge ok">80 dias</span></div><div class="seg-row"><span class="nome">Maria Laura</span><span class="data">20/07/2026</span><span class="dias-badge ok">80 dias</span></div><div class="seg-row"><span class="nome">Caio Rodrigues Vieira</span><span class="data">21/07/2026</span><span class="dias-badge ok">81 dias</span></div><div class="seg-row"><span class="nome">Entre Colunas</span><span class="data">21/07/2026</span><span class="dias-badge ok">81 dias</span></div><div class="seg-row"><span class="nome">Débora Direcional</span><span class="data">22/07/2026</span><span class="dias-badge ok">82 dias</span></div><div class="seg-row"><span class="nome">PH Imóveis</span><span class="data">22/07/2026</span><span class="dias-badge ok">82 dias</span></div><div class="seg-row"><span class="nome">Rodrigo França</span><span class="data">22/07/2026</span><span class="dias-badge ok">82 dias</span></div><div class="seg-row"><span class="nome">MB House Imóveis</span><span class="data">23/07/2026</span><span class="dias-badge ok">83 dias</span></div><div class="seg-row"><span class="nome">Geane e Diogo</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">K2S</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">Patricia Arruda</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">Pellegrini</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">Petra Idealize</span><span class="data">28/07/2026</span><span class="dias-badge ok">88 dias</span></div><div class="seg-row"><span class="nome">Luiz Pinheiro</span><span class="data">29/07/2026</span><span class="dias-badge ok">89 dias</span></div></div>
+<div class="seg-body"><div class="seg-row"><span class="nome">Nêgime Elias</span><span class="data">05/05/2026</span><span class="dias-badge urgente">4 dias</span></div><div class="seg-row"><span class="nome">Beto</span><span class="data">06/05/2026</span><span class="dias-badge urgente">5 dias</span></div><div class="seg-row"><span class="nome">Jean Pedro</span><span class="data">07/05/2026</span><span class="dias-badge urgente">6 dias</span></div><div class="seg-row"><span class="nome">Banco de Negócios</span><span class="data">12/05/2026</span><span class="dias-badge urgente">11 dias</span></div><div class="seg-row"><span class="nome">Coutinho Imóveis</span><span class="data">12/05/2026</span><span class="dias-badge urgente">11 dias</span></div><div class="seg-row"><span class="nome">Darvil Bianchet</span><span class="data">12/05/2026</span><span class="dias-badge urgente">11 dias</span></div><div class="seg-row"><span class="nome">Core Investt</span><span class="data">18/05/2026</span><span class="dias-badge atencao">17 dias</span></div><div class="seg-row"><span class="nome">Octa</span><span class="data">21/05/2026</span><span class="dias-badge atencao">20 dias</span></div><div class="seg-row"><span class="nome">Deize Bonfim</span><span class="data">22/05/2026</span><span class="dias-badge atencao">21 dias</span></div><div class="seg-row"><span class="nome">Lucas Cabral Imobiliária</span><span class="data">22/05/2026</span><span class="dias-badge atencao">21 dias</span></div><div class="seg-row"><span class="nome">Daniela Vieira</span><span class="data">25/05/2026</span><span class="dias-badge atencao">24 dias</span></div><div class="seg-row"><span class="nome">Sabino e Sérgio</span><span class="data">25/05/2026</span><span class="dias-badge atencao">24 dias</span></div><div class="seg-row"><span class="nome">Open House</span><span class="data">28/05/2026</span><span class="dias-badge atencao">27 dias</span></div><div class="seg-row"><span class="nome">ADM Corretora de Imóveis</span><span class="data">05/06/2026</span><span class="dias-badge ok">35 dias</span></div><div class="seg-row"><span class="nome">Marcia Pacheco</span><span class="data">05/06/2026</span><span class="dias-badge ok">35 dias</span></div><div class="seg-row"><span class="nome">SLG Imóveis Mkt</span><span class="data">08/06/2026</span><span class="dias-badge ok">38 dias</span></div><div class="seg-row"><span class="nome">Airton</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">FB Negócios Imobiliários</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">Maxuel Ribeiro</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">Samuel Prado</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">Vert Imóveis</span><span class="data">09/06/2026</span><span class="dias-badge ok">39 dias</span></div><div class="seg-row"><span class="nome">MURANO</span><span class="data">11/06/2026</span><span class="dias-badge ok">41 dias</span></div><div class="seg-row"><span class="nome">Raffael Lourenço</span><span class="data">11/06/2026</span><span class="dias-badge ok">41 dias</span></div><div class="seg-row"><span class="nome">Cleiton Gregol</span><span class="data">17/06/2026</span><span class="dias-badge ok">47 dias</span></div><div class="seg-row"><span class="nome">Anderson Amaral</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Eduardo Joppert</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Marcos Alexandre</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Ronald Chaves</span><span class="data">18/06/2026</span><span class="dias-badge ok">48 dias</span></div><div class="seg-row"><span class="nome">Clareza &amp; Campos de Inhapim</span><span class="data">20/06/2026</span><span class="dias-badge ok">50 dias</span></div><div class="seg-row"><span class="nome">Jean Knoll</span><span class="data">22/06/2026</span><span class="dias-badge ok">52 dias</span></div><div class="seg-row"><span class="nome">Paulo Godoi</span><span class="data">23/06/2026</span><span class="dias-badge ok">53 dias</span></div><div class="seg-row"><span class="nome">Terra Concreto Imóveis</span><span class="data">24/06/2026</span><span class="dias-badge ok">54 dias</span></div><div class="seg-row"><span class="nome">Anderson Coelho</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">Cleverson de Arcanjo</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">Jair Pereira de Souza</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">View Imóveis</span><span class="data">25/06/2026</span><span class="dias-badge ok">55 dias</span></div><div class="seg-row"><span class="nome">Cida Sampaio</span><span class="data">29/06/2026</span><span class="dias-badge ok">59 dias</span></div><div class="seg-row"><span class="nome">Century 21</span><span class="data">02/07/2026</span><span class="dias-badge ok">62 dias</span></div><div class="seg-row"><span class="nome">Cristal – Remax</span><span class="data">03/07/2026</span><span class="dias-badge ok">63 dias</span></div><div class="seg-row"><span class="nome">Lua Imóveis Sorocaba</span><span class="data">03/07/2026</span><span class="dias-badge ok">63 dias</span></div><div class="seg-row"><span class="nome">Nexus</span><span class="data">06/07/2026</span><span class="dias-badge ok">66 dias</span></div><div class="seg-row"><span class="nome">Raquel Lage</span><span class="data">06/07/2026</span><span class="dias-badge ok">66 dias</span></div><div class="seg-row"><span class="nome">Victor Lacerda (BJJ)</span><span class="data">06/07/2026</span><span class="dias-badge ok">66 dias</span></div><div class="seg-row"><span class="nome">Fernando Maia Imóveis</span><span class="data">07/07/2026</span><span class="dias-badge ok">67 dias</span></div><div class="seg-row"><span class="nome">Vórtice Ativos Imobiliários</span><span class="data">08/07/2026</span><span class="dias-badge ok">68 dias</span></div><div class="seg-row"><span class="nome">Charlisson Imóveis</span><span class="data">10/07/2026</span><span class="dias-badge ok">70 dias</span></div><div class="seg-row"><span class="nome">Aurelio Coutinho</span><span class="data">13/07/2026</span><span class="dias-badge ok">73 dias</span></div><div class="seg-row"><span class="nome">Remax SJC</span><span class="data">15/07/2026</span><span class="dias-badge ok">75 dias</span></div><div class="seg-row"><span class="nome">Wall Street</span><span class="data">15/07/2026</span><span class="dias-badge ok">75 dias</span></div><div class="seg-row"><span class="nome">Samy Corretora</span><span class="data">16/07/2026</span><span class="dias-badge ok">76 dias</span></div><div class="seg-row"><span class="nome">Marcelo Timbaúba</span><span class="data">18/07/2026</span><span class="dias-badge ok">78 dias</span></div><div class="seg-row"><span class="nome">Imóveis Geraldo</span><span class="data">20/07/2026</span><span class="dias-badge ok">80 dias</span></div><div class="seg-row"><span class="nome">Maria Laura</span><span class="data">20/07/2026</span><span class="dias-badge ok">80 dias</span></div><div class="seg-row"><span class="nome">Caio Rodrigues Vieira</span><span class="data">21/07/2026</span><span class="dias-badge ok">81 dias</span></div><div class="seg-row"><span class="nome">Entre Colunas</span><span class="data">21/07/2026</span><span class="dias-badge ok">81 dias</span></div><div class="seg-row"><span class="nome">Débora Direcional</span><span class="data">22/07/2026</span><span class="dias-badge ok">82 dias</span></div><div class="seg-row"><span class="nome">PH Imóveis</span><span class="data">22/07/2026</span><span class="dias-badge ok">82 dias</span></div><div class="seg-row"><span class="nome">Rodrigo França</span><span class="data">22/07/2026</span><span class="dias-badge ok">82 dias</span></div><div class="seg-row"><span class="nome">MB House Imóveis</span><span class="data">23/07/2026</span><span class="dias-badge ok">83 dias</span></div><div class="seg-row"><span class="nome">Geane e Diogo</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">K2S</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">Patricia Arruda</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">Pellegrini</span><span class="data">27/07/2026</span><span class="dias-badge ok">87 dias</span></div><div class="seg-row"><span class="nome">Petra Idealize</span><span class="data">28/07/2026</span><span class="dias-badge ok">88 dias</span></div><div class="seg-row"><span class="nome">Jeferson Almeida</span><span class="data">29/07/2026</span><span class="dias-badge ok">89 dias</span></div><div class="seg-row"><span class="nome">Luiz Pinheiro</span><span class="data">29/07/2026</span><span class="dias-badge ok">89 dias</span></div><div class="seg-row"><span class="nome">Héctor Cassilha</span><span class="data">30/07/2026</span><span class="dias-badge ok">90 dias</span></div><div class="seg-row"><span class="nome">Miqueias</span><span class="data">30/07/2026</span><span class="dias-badge ok">90 dias</span></div></div>
 </div>
 <!-- 3–6 MESES -->
 <div class="seg-card marketing-seg-card">
@@ -659,23 +803,22 @@
 </div>
 </div>
 </div><div class="section" style="padding-bottom:0">
-<p class="section-title">Churns — Julho/2026</p>
+<p class="section-title" id="churnSectionTitle">Churns — Julho/2026</p>
 <div class="churn-wrap">
 <div class="churn-header">
 <span>Cancelamentos no período</span>
-<span style="font-family:'DM Mono',monospace;font-size:1.1rem">10 churns em julho</span>
+<span id="churnHeaderCount" style="font-family:'DM Mono',monospace;font-size:1.1rem">14 churns em julho</span>
 </div>
 <table class="churn-table">
 <thead>
-<tr><th>Cliente</th><th>Entrada</th><th>Saída</th><th>Permanência</th></tr>
+<tr><th>Cliente</th><th>Entrada</th><th>Saída</th><th>Permanência</th><th>Qualidade</th></tr>
 </thead>
-<tbody><tr><td data-label="Cliente">Ideali Imóveis</td><td class="mono" data-label="Entrada">14/04/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">3 meses</span></td></tr><tr><td data-label="Cliente">Jaime Adelino</td><td class="mono" data-label="Entrada">27/03/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">4 meses</span></td></tr><tr><td data-label="Cliente">MMK Negócios Imob.</td><td class="mono" data-label="Entrada">09/03/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">4 meses</span></td></tr><tr><td data-label="Cliente">Ney</td><td class="mono" data-label="Entrada">25/02/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">4 meses</span></td></tr><tr><td data-label="Cliente">Davi Silveira</td><td class="mono" data-label="Entrada">27/04/2026</td><td class="mono" data-label="Saída">21/07/2026</td><td data-label="Permanência"><span class="churn-badge">3 meses</span></td></tr><tr><td data-label="Cliente">Domus Serviços Imobiliários</td><td class="mono" data-label="Entrada">16/03/2026</td><td class="mono" data-label="Saída">22/07/2026</td><td data-label="Permanência"><span class="churn-badge">4 meses</span></td></tr><tr><td data-label="Cliente">Cassio Imóveis</td><td class="mono" data-label="Entrada">07/04/2026</td><td class="mono" data-label="Saída">23/07/2026</td><td data-label="Permanência"><span class="churn-badge">4 meses</span></td></tr><tr><td data-label="Cliente">Thema</td><td class="mono" data-label="Entrada">24/11/2025</td><td class="mono" data-label="Saída">27/07/2026</td><td data-label="Permanência"><span class="churn-badge">8 meses</span></td></tr><tr><td data-label="Cliente">Estelar Incorporadora</td><td class="mono" data-label="Entrada">04/05/2026</td><td class="mono" data-label="Saída">26/07/2026</td><td data-label="Permanência"><span class="churn-badge">3 meses</span></td></tr><tr><td data-label="Cliente">Levi Medeiros</td><td class="mono" data-label="Entrada">26/06/2026</td><td class="mono" data-label="Saída">27/07/2026</td><td data-label="Permanência"><span class="churn-badge">1 mês</span></td></tr></tbody>
+<tbody id="churnHistoryBody"><tr><td data-label="Cliente">Luciano Oliveira</td><td class="mono" data-label="Entrada">03/06/2026</td><td class="mono" data-label="Saída">03/07/2026</td><td data-label="Permanência"><span class="churn-badge">30 dias · 1,0 m</span></td><td data-label="Qualidade"><span class="churn-quality estimated">Estimada</span></td></tr><tr><td data-label="Cliente">Marco Aurélio</td><td class="mono" data-label="Entrada">24/04/2026</td><td class="mono" data-label="Saída">03/07/2026</td><td data-label="Permanência"><span class="churn-badge">70 dias · 2,3 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Ideali Imóveis</td><td class="mono" data-label="Entrada">14/04/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">87 dias · 2,9 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Jaime Adelino</td><td class="mono" data-label="Entrada">27/03/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">105 dias · 3,5 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Ney</td><td class="mono" data-label="Entrada">25/02/2026</td><td class="mono" data-label="Saída">10/07/2026</td><td data-label="Permanência"><span class="churn-badge">135 dias · 4,5 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Corretores Unic</td><td class="mono" data-label="Entrada">20/02/2026</td><td class="mono" data-label="Saída">12/07/2026</td><td data-label="Permanência"><span class="churn-badge">142 dias · 4,7 m</span></td><td data-label="Qualidade"><span class="churn-quality estimated">Estimada</span></td></tr><tr><td data-label="Cliente">MMK Negócios Imobiliários</td><td class="mono" data-label="Entrada">09/03/2026</td><td class="mono" data-label="Saída">17/07/2026</td><td data-label="Permanência"><span class="churn-badge">130 dias · 4,3 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Confirmada</span></td></tr><tr><td data-label="Cliente">Marcus Lucato</td><td class="mono" data-label="Entrada">20/02/2026</td><td class="mono" data-label="Saída">18/07/2026</td><td data-label="Permanência"><span class="churn-badge">148 dias · 4,9 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Confirmada</span></td></tr><tr><td data-label="Cliente">Davi Silveira</td><td class="mono" data-label="Entrada">27/04/2026</td><td class="mono" data-label="Saída">21/07/2026</td><td data-label="Permanência"><span class="churn-badge">85 dias · 2,8 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Domus Serviços Imobiliários</td><td class="mono" data-label="Entrada">16/03/2026</td><td class="mono" data-label="Saída">22/07/2026</td><td data-label="Permanência"><span class="churn-badge">128 dias · 4,3 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Cassio Imóveis</td><td class="mono" data-label="Entrada">07/04/2026</td><td class="mono" data-label="Saída">23/07/2026</td><td data-label="Permanência"><span class="churn-badge">107 dias · 3,6 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Estelar Incorporadora</td><td class="mono" data-label="Entrada">04/05/2026</td><td class="mono" data-label="Saída">26/07/2026</td><td data-label="Permanência"><span class="churn-badge">83 dias · 2,8 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Thema</td><td class="mono" data-label="Entrada">24/11/2025</td><td class="mono" data-label="Saída">27/07/2026</td><td data-label="Permanência"><span class="churn-badge">245 dias · 8,2 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr><tr><td data-label="Cliente">Levi Medeiros</td><td class="mono" data-label="Entrada">26/06/2026</td><td class="mono" data-label="Saída">27/07/2026</td><td data-label="Permanência"><span class="churn-badge">31 dias · 1,0 m</span></td><td data-label="Qualidade"><span class="churn-quality confirmed">Registrada</span></td></tr></tbody>
 </table>
 </div>
+<p class="churn-method-note" id="churnMethodNote">Julho: 12 datas registradas/confirmadas e 2 estimadas. Selecione outro mês nos Indicadores Gerais para atualizar esta tabela.</p></div>
 </div>
-<p style="font-size:.72rem;color:var(--text-light);margin-top:14px;padding-left:4px">Cálculo padronizado: referência em 30/07/2026. DAYMOD, Rezzidenze e Jacqueline Santana foram removidos da carteira ativa sem registro de churn. Lopes Chaves foi consolidado em Ronald Chaves por se tratar do mesmo cliente. Luiz Pinheiro foi adicionado à carteira de Marketing com entrada em 29/07/2026. Todos os indicadores, badges e transições foram recalculados diretamente a partir dos registros ativos e do histórico de churn.</p>
-</div>
-<footer class="footer">Carteira de Clientes · Referência 30/07/2026 · 82 clientes ativos (79 Marketing + 3 apenas IA)</footer>
+<footer class="footer">Carteira de Clientes · Referência 30/07/2026 · 85 clientes ativos (82 Marketing + 3 apenas IA)</footer>
 <script>
   const io = new IntersectionObserver(e => {
     e.forEach(x => { if(x.isIntersecting){ x.target.classList.add('visible'); io.unobserve(x.target); } });
@@ -708,9 +851,9 @@
 
   const getClients = type => {
     if (type === 'ia') {
-      return [...document.querySelectorAll('.ia-client')].map(card => ({
-        name: card.querySelector('.ia-client-name')?.textContent.trim() || '',
-        meta: card.querySelector('.ia-client-meta span:first-child')?.textContent.trim() || ''
+      return [...document.querySelectorAll('.ia-seg-card .seg-row')].map(row => ({
+        name: row.querySelector('.nome')?.textContent.trim() || '',
+        meta: row.querySelector('.data')?.textContent.replace('Entrada:', '').trim() || ''
       })).filter(client => client.name);
     }
     return uniqueNames('.marketing-seg-card .seg-row .nome').map(name => ({ name, meta: '' }));
@@ -853,6 +996,113 @@
       toggleOpen();
     }
   });
+})();
+</script><script>
+(() => {
+  const monthlyIndicators = {"2026-07":{"label":"Julho/2026","monthLower":"julho","reference":"30/07/2026","current":true,"quality":"high","qualityLabel":"Alta confiança","qualityDetail":"Base atual confirmada; 31 entradas permanecem ativas e Petronio foi removido administrativamente, totalizando 32 entradas brutas; 12 saídas registradas/confirmadas e 2 datas estimadas.","marketing":{"active":83,"less3":68,"three6":11,"over6":4,"ltv":1.94,"entries":32,"churns":14,"churnRate":14.4,"churnBase":97,"tpc":3.6,"balance":18},"ia":{"active":3,"less3":1,"three6":2,"over6":0,"ltv":3.33,"entries":0,"churns":0,"churnRate":0.0,"churnBase":3,"tpc":null,"balance":0},"total":86,"adminRemovals":1,"estimatedChurns":2},"2026-06":{"label":"Junho/2026","monthLower":"junho","reference":"30/06/2026","current":false,"quality":"medium","qualityLabel":"Confiança média","qualityDetail":"11 saídas registradas/confirmadas e 5 datas reconstruídas por snapshots e último contato.","marketing":{"active":66,"less3":52,"three6":10,"over6":4,"ltv":2.12,"entries":26,"churns":16,"churnRate":19.5,"churnBase":82,"tpc":3.5,"balance":10},"ia":{"active":3,"less3":2,"three6":1,"over6":0,"ltv":2.33,"entries":0,"churns":0,"churnRate":0.0,"churnBase":3,"tpc":null,"balance":0},"total":69,"adminRemovals":0,"estimatedChurns":5},"2026-05":{"label":"Maio/2026","monthLower":"maio","reference":"31/05/2026","current":false,"quality":"estimated","qualityLabel":"Reconstruído","qualityDetail":"1 saída confirmada e 10 datas estimadas pelo último contato disponível; não havia snapshot mensal completo.","marketing":{"active":56,"less3":40,"three6":11,"over6":5,"ltv":2.41,"entries":17,"churns":11,"churnRate":16.4,"churnBase":67,"tpc":3.7,"balance":6},"ia":{"active":3,"less3":3,"three6":0,"over6":0,"ltv":1.33,"entries":1,"churns":0,"churnRate":0.0,"churnBase":3,"tpc":null,"balance":1},"total":59,"adminRemovals":0,"estimatedChurns":10},"2026-04":{"label":"Abril/2026","monthLower":"abril","reference":"30/04/2026","current":false,"quality":"estimated","qualityLabel":"Reconstruído","qualityDetail":"12 saídas estimadas pelo último contato disponível; não havia snapshot mensal completo.","marketing":{"active":50,"less3":36,"three6":9,"over6":5,"ltv":2.41,"entries":15,"churns":12,"churnRate":19.4,"churnBase":62,"tpc":3.5,"balance":3},"ia":{"active":2,"less3":2,"three6":0,"over6":0,"ltv":0.92,"entries":1,"churns":0,"churnRate":0.0,"churnBase":2,"tpc":null,"balance":1},"total":52,"adminRemovals":0,"estimatedChurns":12},"2026-03":{"label":"Março/2026","monthLower":"março","reference":"31/03/2026","current":false,"quality":"estimated","qualityLabel":"Reconstruído","qualityDetail":"Saídas estimadas pelo último contato disponível; não havia snapshot mensal completo.","marketing":{"active":47,"less3":33,"three6":9,"over6":5,"ltv":2.49,"entries":13,"churns":3,"churnRate":6.0,"churnBase":50,"tpc":1.7,"balance":10},"ia":{"active":1,"less3":1,"three6":0,"over6":0,"ltv":0.57,"entries":1,"churns":0,"churnRate":0.0,"churnBase":1,"tpc":null,"balance":1},"total":48,"adminRemovals":0,"estimatedChurns":3}};
+  const monthlyChurns = {"2026-07":[["Luciano Oliveira","03/06/2026","03/07/2026",30,1.0,"Estimada"],["Marco Aurélio","24/04/2026","03/07/2026",70,2.3,"Registrada"],["Ideali Imóveis","14/04/2026","10/07/2026",87,2.9,"Registrada"],["Jaime Adelino","27/03/2026","10/07/2026",105,3.5,"Registrada"],["Ney","25/02/2026","10/07/2026",135,4.5,"Registrada"],["Corretores Unic","20/02/2026","12/07/2026",142,4.7,"Estimada"],["MMK Negócios Imobiliários","09/03/2026","17/07/2026",130,4.3,"Confirmada"],["Marcus Lucato","20/02/2026","18/07/2026",148,4.9,"Confirmada"],["Davi Silveira","27/04/2026","21/07/2026",85,2.8,"Registrada"],["Domus Serviços Imobiliários","16/03/2026","22/07/2026",128,4.3,"Registrada"],["Cassio Imóveis","07/04/2026","23/07/2026",107,3.6,"Registrada"],["Estelar Incorporadora","04/05/2026","26/07/2026",83,2.8,"Registrada"],["Thema","24/11/2025","27/07/2026",245,8.2,"Registrada"],["Levi Medeiros","26/06/2026","27/07/2026",31,1.0,"Registrada"]],"2026-06":[["Unic Imóveis","06/02/2026","06/06/2026",120,4.0,"Registrada"],["NS Cinco Imóveis","03/03/2026","09/06/2026",98,3.3,"Registrada"],["Diego Imóveis","10/01/2026","10/06/2026",151,5.0,"Registrada"],["Julianna Mustaffa","10/04/2026","11/06/2026",62,2.1,"Registrada"],["Leonardo Cremer","16/04/2026","11/06/2026",56,1.9,"Registrada"],["Brisa Imóveis","05/03/2026","14/06/2026",101,3.4,"Registrada"],["Innova","05/02/2026","14/06/2026",129,4.3,"Registrada"],["Felipe Carrara","28/01/2026","15/06/2026",138,4.6,"Estimada"],["Nilton Souza","27/02/2026","15/06/2026",108,3.6,"Estimada"],["Galeria de Imóveis","13/05/2026","17/06/2026",35,1.2,"Registrada"],["Cunha","15/09/2025","17/06/2026",275,9.2,"Estimada"],["Family Broker","25/02/2026","18/06/2026",113,3.8,"Estimada"],["Aurum","19/05/2026","29/06/2026",41,1.4,"Registrada"],["Única Imobiliária","13/05/2026","29/06/2026",47,1.6,"Registrada"],["Luciano Fuchs","02/04/2026","29/06/2026",88,2.9,"Registrada"],["Central da Casa Própria","06/03/2026","30/06/2026",116,3.9,"Estimada"]],"2026-05":[["Krollow","11/03/2026","06/05/2026",56,1.9,"Estimada"],["Natividade","11/03/2026","06/05/2026",56,1.9,"Estimada"],["Statia","03/03/2026","08/05/2026",66,2.2,"Estimada"],["WL Imóveis","30/01/2026","14/05/2026",104,3.5,"Estimada"],["Rivith","09/01/2026","15/05/2026",126,4.2,"Estimada"],["Fábio Paes","25/03/2026","19/05/2026",55,1.8,"Estimada"],["Juliana Ricciardi","04/12/2025","19/05/2026",166,5.5,"Estimada"],["Fábio Coelho","23/02/2026","21/05/2026",87,2.9,"Estimada"],["FR Imóveis","07/10/2025","24/05/2026",229,7.6,"Estimada"],["Vinicius Moreira","18/12/2025","24/05/2026",157,5.2,"Estimada"],["Marcelo Henrique","22/01/2026","30/05/2026",128,4.3,"Confirmada"]],"2026-04":[["GDG","08/11/2025","01/04/2026",144,4.8,"Estimada"],["Paulo Sérgio","28/01/2026","02/04/2026",64,2.1,"Estimada"],["Breno Helbor","02/10/2025","03/04/2026",183,6.1,"Estimada"],["Adilson Jr.","09/01/2026","07/04/2026",88,2.9,"Estimada"],["Real Residence","20/02/2026","07/04/2026",46,1.5,"Estimada"],["GIU Holtz","24/11/2025","10/04/2026",137,4.6,"Estimada"],["Juliani e Oliveira","28/11/2025","15/04/2026",138,4.6,"Estimada"],["Ákua","16/12/2025","16/04/2026",121,4.0,"Estimada"],["Fagulha","03/03/2026","16/04/2026",44,1.5,"Estimada"],["Toca","19/01/2026","20/04/2026",91,3.0,"Estimada"],["Anna Laura","11/02/2026","27/04/2026",75,2.5,"Estimada"],["Kairós","05/12/2025","27/04/2026",143,4.8,"Estimada"]],"2026-03":[["Alessandro Couto","08/12/2025","01/03/2026",83,2.8,"Estimada"],["ES Corretora","27/02/2026","30/03/2026",31,1.0,"Estimada"],["D&D","16/02/2026","31/03/2026",43,1.4,"Estimada"]]};
+  const monthOrder = ['2026-03','2026-04','2026-05','2026-06','2026-07'];
+  const monthOrderDesc = [...monthOrder].reverse();
+  const select = document.getElementById('monthHistorySelect');
+  const referenceBadge = document.getElementById('monthReferenceBadge');
+  const qualityPill = document.getElementById('historyQualityPill');
+  const fmt = (n, digits=1) => Number(n).toLocaleString('pt-BR', {minimumFractionDigits:digits, maximumFractionDigits:digits});
+  const pctShare = (n,total) => `${fmt(total ? n/total*100 : 0,1)}%`;
+  const plural = (n,one,many) => n === 1 ? one : many;
+  const card = (panel,key) => panel.querySelector(`[data-kpi="${key}"]`);
+  const setCard = (panel,key,label,value,sub) => {
+    const el=card(panel,key); if(!el) return;
+    el.querySelector('.kpi-label').textContent=label;
+    el.querySelector('.kpi-value').innerHTML=value;
+    el.querySelector('.kpi-sub').textContent=sub;
+  };
+  const renderSector = (sector,month) => {
+    const data=month[sector];
+    const panel=document.querySelector(`[data-sector-panel="${sector}"]`); if(!panel) return;
+    const sectorName=sector==='marketing'?'Marketing':'IA';
+    setCard(panel,'active','Clientes ativos',String(data.active),`clientes de ${sectorName} em ${month.reference}`);
+    setCard(panel,'less3','Clientes < 3 meses',String(data.less3),`${pctShare(data.less3,data.active)} da carteira de ${sectorName}`);
+    setCard(panel,'three6','Clientes 3–6 meses',String(data.three6),`${pctShare(data.three6,data.active)} da carteira de ${sectorName}`);
+    setCard(panel,'over6','Clientes > 6 meses',String(data.over6),`${pctShare(data.over6,data.active)} da carteira de ${sectorName}`);
+    setCard(panel,'ltv','LTV médio',data.ltv===null?'—':`${fmt(data.ltv,2)}<span style="font-size:1rem;font-weight:600"> m</span>`,'tempo médio da carteira ativa');
+    setCard(panel,'entries',`Entradas em ${month.monthLower}`,String(data.entries),`novos clientes de ${sectorName}`);
+    setCard(panel,'churns',`Churns em ${month.monthLower}`,String(data.churns),data.churns?`${data.churns} ${plural(data.churns,'cancelamento','cancelamentos')} no período`:'nenhum cancelamento registrado');
+    setCard(panel,'churnRate','Taxa de churn',`${fmt(data.churnRate,1)}<span style="font-size:1rem;font-weight:600">%</span>`,`${data.churns} churns sobre base potencial de ${data.churnBase}`);
+    setCard(panel,'tpc','TPC',data.tpc===null?'—':`${fmt(data.tpc,1)}<span style="font-size:1rem;font-weight:600"> m</span>`,data.tpc===null?'sem churns para calcular permanência':`tempo médio dos ${data.churns} churns de ${month.monthLower}`);
+    setCard(panel,'balance','Saldo líquido',String(data.balance),`entradas menos churns de ${sectorName} em ${month.monthLower}`);
+    const ref=panel.querySelector('.historical-panel-reference'); if(ref) ref.textContent=`Fotografia em ${month.reference}`;
+  };
+  const variation = (cur,prev) => prev===0 ? null : (cur-prev)/Math.abs(prev)*100;
+  const variationText = v => v===null ? 'sem base anterior' : `${v>=0?'+':''}${fmt(v,1)}%`;
+  const renderComparison = (key) => {
+    const idx=monthOrder.indexOf(key), month=monthlyIndicators[key], prevKey=idx>0?monthOrder[idx-1]:null, prev=prevKey?monthlyIndicators[prevKey]:null;
+    const grid=document.getElementById('comparisonGrid'); grid.innerHTML='';
+    const title=document.getElementById('historyAnalysisTitle');
+    const ref=document.getElementById('historyAnalysisReference');
+    const text=document.getElementById('historyAnalysisText');
+    const quality=document.getElementById('historyQualityDetail');
+    ref.textContent=`Referência: ${month.reference}`;
+    quality.textContent=month.qualityDetail;
+    qualityPill.textContent=month.qualityLabel; qualityPill.className=`history-quality-pill ${month.quality}`;
+    if(!prev) {
+      title.textContent=`${month.label} — primeiro mês da série`;
+      text.textContent='Este é o primeiro mês disponível para comparação. Os percentuais de evolução começam no mês seguinte.';
+      [['Base ativa',month.total,'fotografia consolidada'],['Entradas',month.marketing.entries,'novos clientes de Marketing'],['Churns',month.marketing.churns,'saídas no mês'],['Churn rate',`${fmt(month.marketing.churnRate,1)}%`,'metodologia da base potencial'],['LTV',`${fmt(month.marketing.ltv,2)} m`,'média da carteira ativa']].forEach(([label,value,sub])=>{
+        grid.insertAdjacentHTML('beforeend',`<div class="delta-card neutral"><div class="delta-label">${label}</div><div class="delta-value">${value}</div><div class="delta-sub">${sub}</div></div>`);
+      }); return;
+    }
+    title.textContent=`${month.label} versus ${prev.label}`;
+    const specs=[
+      {label:'Base ativa',cur:month.total,prev:prev.total,inverse:false,sub:`${prev.total} → ${month.total} clientes`},
+      {label:'Entradas',cur:month.marketing.entries,prev:prev.marketing.entries,inverse:false,sub:`${prev.marketing.entries} → ${month.marketing.entries} entradas`},
+      {label:'Churns',cur:month.marketing.churns,prev:prev.marketing.churns,inverse:true,sub:`${prev.marketing.churns} → ${month.marketing.churns} saídas`},
+      {label:'Churn rate',cur:month.marketing.churnRate,prev:prev.marketing.churnRate,inverse:true,sub:`${fmt(prev.marketing.churnRate,1)}% → ${fmt(month.marketing.churnRate,1)}%`},
+      {label:'LTV',cur:month.marketing.ltv,prev:prev.marketing.ltv,inverse:false,sub:`${fmt(prev.marketing.ltv,2)} → ${fmt(month.marketing.ltv,2)} meses`},
+    ];
+    specs.forEach(s=>{
+      const v=variation(s.cur,s.prev); let good=v===null?null:(s.inverse?v<0:v>0); let cls=v===0||v===null?'neutral':good?'good':'bad';
+      const direction=v===null?'—':v===0?'estável':good?'melhora':'piora';
+      grid.insertAdjacentHTML('beforeend',`<div class="delta-card ${cls}"><div class="delta-label">${s.label}</div><div class="delta-value">${variationText(v)}</div><div class="delta-sub">${direction} · ${s.sub}</div></div>`);
+    });
+    const activeV=variation(month.total,prev.total), entryV=variation(month.marketing.entries,prev.marketing.entries), churnV=variation(month.marketing.churns,prev.marketing.churns), rateV=variation(month.marketing.churnRate,prev.marketing.churnRate), ltvV=variation(month.marketing.ltv,prev.marketing.ltv), balV=variation(month.marketing.balance,prev.marketing.balance);
+    const parts=[`a base ativa ${activeV>=0?'cresceu':'recuou'} ${fmt(Math.abs(activeV),1)}%`, `as entradas ${entryV>=0?'subiram':'caíram'} ${fmt(Math.abs(entryV),1)}%`, `o volume de churn ${churnV<=0?'caiu':'subiu'} ${fmt(Math.abs(churnV),1)}%`, `a taxa de churn ${rateV<=0?'melhorou, com queda de':'piorou, com alta de'} ${fmt(Math.abs(rateV),1)}%`, `o saldo líquido ${balV>=0?'melhorou':'recuou'} ${fmt(Math.abs(balV),1)}%`];
+    const ltvSentence=`O LTV ${ltvV>=0?'avançou':'recuou'} ${fmt(Math.abs(ltvV),1)}%.`;
+    text.textContent=`Na comparação com ${prev.label}, ${parts.join(', ')}. ${ltvSentence}`;
+  };
+  const renderChurnTable = key => {
+    const month=monthlyIndicators[key], rows=monthlyChurns[key]||[];
+    document.getElementById('churnSectionTitle').textContent=`Churns — ${month.label}`;
+    document.getElementById('churnHeaderCount').textContent=`${rows.length} ${plural(rows.length,'churn','churns')} em ${month.monthLower}`;
+    const tbody=document.getElementById('churnHistoryBody'); tbody.innerHTML='';
+    rows.forEach(r=>{
+      const [name,entry,exitd,days,monthsCount,quality]=r;
+      const qcls=quality==='Estimada'?'estimated':'confirmed';
+      tbody.insertAdjacentHTML('beforeend',`<tr><td data-label="Cliente">${name}</td><td class="mono" data-label="Entrada">${entry}</td><td class="mono" data-label="Saída">${exitd}</td><td data-label="Permanência"><span class="churn-badge">${days} dias · ${fmt(monthsCount,1)} m</span></td><td data-label="Qualidade"><span class="churn-quality ${qcls}">${quality}</span></td></tr>`);
+    });
+    const confirmed=rows.filter(r=>r[5]!=='Estimada').length, estimated=rows.length-confirmed;
+    let note=`${month.label}: ${confirmed} datas registradas/confirmadas e ${estimated} estimadas.`;
+    if(month.adminRemovals) note+=` Houve ${month.adminRemovals} remoção administrativa, não contabilizada como churn.`;
+    document.getElementById('churnMethodNote').textContent=note+' A permanência é calculada em dias exatos e convertida para meses por divisão por 30.';
+  };
+  const renderSummaryTable = selected => {
+    const body=document.getElementById('historySummaryBody'); body.innerHTML='';
+    monthOrderDesc.forEach(key=>{ const m=monthlyIndicators[key];
+      body.insertAdjacentHTML('beforeend',`<tr data-history-month="${key}" class="${key===selected?'selected':''}"><td class="history-month-cell">${m.label}</td><td>${m.total}</td><td>${m.marketing.active}</td><td>${m.ia.active}</td><td>${m.marketing.entries}</td><td>${m.marketing.churns}</td><td>${fmt(m.marketing.churnRate,1)}%</td><td>${fmt(m.marketing.ltv,2)} m</td><td>${fmt(m.marketing.tpc,1)} m</td><td>${m.marketing.balance>=0?'+':''}${m.marketing.balance}</td><td><span class="history-quality-mini ${m.quality}">${m.qualityLabel}</span></td></tr>`);
+    });
+    body.querySelectorAll('[data-history-month]').forEach(row=>row.addEventListener('click',()=>{select.value=row.dataset.historyMonth; renderAll(); document.getElementById('historyEvolutionSection').scrollIntoView({behavior:'smooth',block:'start'});}));
+  };
+  const canvasSetup = canvas => {
+    const rect=canvas.getBoundingClientRect(), dpr=Math.max(1,window.devicePixelRatio||1); canvas.width=Math.max(320,rect.width)*dpr; canvas.height=Math.max(190,rect.height)*dpr; const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return {ctx,w:Math.max(320,rect.width),h:Math.max(190,rect.height)};
+  };
+  const chartColors = () => { const st=getComputedStyle(document.documentElement); return {blue:st.getPropertyValue('--azul-viv').trim()||'#1E72D4',dark:st.getPropertyValue('--azul-esc').trim()||'#0B1F4A',orange:st.getPropertyValue('--laranja').trim()||'#F26B1D',light:st.getPropertyValue('--text-light').trim()||'#8AAAD4',red:'#E53E3E',green:'#2F9E44',grid:'rgba(30,114,212,.10)'}; };
+  const drawAxes=(ctx,w,h,max,labels,suffix='')=>{ const p={l:42,r:14,t:16,b:34}, H=h-p.t-p.b,W=w-p.l-p.r; ctx.clearRect(0,0,w,h); ctx.font='10px DM Mono, monospace'; ctx.fillStyle=chartColors().light; ctx.textAlign='right'; ctx.textBaseline='middle'; for(let i=0;i<=4;i++){const y=p.t+H*i/4,val=max*(1-i/4);ctx.strokeStyle=chartColors().grid;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(w-p.r,y);ctx.stroke();ctx.fillText(`${fmt(val,max<10?1:0)}${suffix}`,p.l-7,y);} labels.forEach((lab,i)=>{const x=p.l+(labels.length===1?W/2:W*i/(labels.length-1));ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText(lab,x,h-p.b+9);}); return {p,H,W}; };
+  const drawLine=(id,series,maxOverride=null,suffix='')=>{ const canvas=document.getElementById(id); if(!canvas)return; const {ctx,w,h}=canvasSetup(canvas), labels=monthOrder.map(k=>monthlyIndicators[k].label.split('/')[0].slice(0,3)); const values=series.flatMap(s=>s.values); const max=maxOverride||Math.max(...values,1)*1.15; const {p,H,W}=drawAxes(ctx,w,h,max,labels,suffix), colors=chartColors(); series.forEach(s=>{ctx.strokeStyle=s.color;ctx.lineWidth=2.5;ctx.beginPath();s.values.forEach((v,i)=>{const x=p.l+W*i/(s.values.length-1),y=p.t+H*(1-v/max);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();s.values.forEach((v,i)=>{const x=p.l+W*i/(s.values.length-1),y=p.t+H*(1-v/max);ctx.fillStyle='#fff';ctx.strokeStyle=s.color;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();ctx.stroke();});}); let lx=p.l;series.forEach(s=>{ctx.fillStyle=s.color;ctx.fillRect(lx,3,12,3);ctx.fillStyle=colors.light;ctx.font='10px Sora, sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(s.label,lx+17,5);lx+=ctx.measureText(s.label).width+42;}); };
+  const drawBars=(id)=>{ const canvas=document.getElementById(id); if(!canvas)return; const {ctx,w,h}=canvasSetup(canvas), labels=monthOrder.map(k=>monthlyIndicators[k].label.split('/')[0].slice(0,3)), entries=monthOrder.map(k=>monthlyIndicators[k].marketing.entries), churnVals=monthOrder.map(k=>monthlyIndicators[k].marketing.churns), max=Math.max(...entries,...churnVals)*1.2, {p,H,W}=drawAxes(ctx,w,h,max,labels), colors=chartColors(), groupW=W/labels.length, barW=Math.min(20,groupW*.25); labels.forEach((_,i)=>{const center=p.l+groupW*(i+.5),eH=H*entries[i]/max,cH=H*churnVals[i]/max;ctx.fillStyle=colors.blue;ctx.fillRect(center-barW-2,p.t+H-eH,barW,eH);ctx.fillStyle=colors.red;ctx.fillRect(center+2,p.t+H-cH,barW,cH);});ctx.fillStyle=colors.blue;ctx.fillRect(p.l,3,12,4);ctx.fillStyle=colors.light;ctx.font='10px Sora, sans-serif';ctx.textAlign='left';ctx.fillText('Entradas',p.l+17,6);ctx.fillStyle=colors.red;ctx.fillRect(p.l+90,3,12,4);ctx.fillStyle=colors.light;ctx.fillText('Churns',p.l+107,6); };
+  const renderCharts=()=>{ const c=chartColors(); drawLine('activeTrendChart',[{label:'Total',color:c.dark,values:monthOrder.map(k=>monthlyIndicators[k].total)},{label:'Marketing',color:c.blue,values:monthOrder.map(k=>monthlyIndicators[k].marketing.active)}]); drawBars('flowTrendChart'); drawLine('churnTrendChart',[{label:'Churn rate',color:c.red,values:monthOrder.map(k=>monthlyIndicators[k].marketing.churnRate)}],null,'%'); drawLine('retentionTrendChart',[{label:'LTV',color:c.orange,values:monthOrder.map(k=>monthlyIndicators[k].marketing.ltv)},{label:'TPC',color:c.blue,values:monthOrder.map(k=>monthlyIndicators[k].marketing.tpc)}]); };
+  const renderAll=()=>{ const key=select.value, month=monthlyIndicators[key]; if(!month)return; referenceBadge.textContent=`Referência: ${month.reference}`; renderSector('marketing',month); renderSector('ia',month); document.querySelectorAll('[data-sector-tab]').forEach(tab=>{const s=tab.dataset.sectorTab;tab.querySelector('strong').textContent=month[s].active;}); renderComparison(key); renderChurnTable(key); renderSummaryTable(key); requestAnimationFrame(renderCharts); };
+  select.addEventListener('change',renderAll);
+  let resizeTimer; window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(renderCharts,120);});
+  renderAll();
 })();
 </script></body>
 </html>
